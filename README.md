@@ -10,8 +10,9 @@
 `docker run --rm -it -v c:\src:c:\src mailbyms/msbuild-sonar:2019 cmd`
 
 # drone 流水线配置
-> 下面的步骤，`xxx.csproj`, `YOUR_PROJECT_KEY` 和 `YOUR_PROJECT_REPO_SHORT_NAME` 要替换为实际值  
-> custom_ding_token 是可选的，用于 SonarQube 回调发送钉钉消息
+> 下面的步骤，`xxx.csproj`, `YOUR_PROJECT_KEY` 和 `YOUR_PROJECT_REPO_SHORT_NAME` 要替换为实际值；  
+> custom_ding_token 是可选的，用于 SonarQube 回调发送钉钉消息；  
+> 下面的示例把项目原来的 .net Framework 版本定义，由 4.6.2 改为 镜像里的 4.7.2
 
 ```
 steps:
@@ -27,7 +28,7 @@ steps:
       custom_ding_token:
         from_secret: dingtalk_token
     commands:
-      - (Get-Content xxx.csproj) -replace "TargetFrameworkVersion>v4.6.2<","TargetFrameworkVersion>v4.7.2<" | Set-Content xxx.csproj
+      - gci -r -include "App.config","*.csproj"| foreach-object { $a = $_.fullname; ( get-content $a ) | foreach-object { $_ -replace "4.6.2","4.7.2" }  | set-content $a }
       - nuget restore
       - SonarScanner.MSBuild.exe begin /k:"YOUR_PROJECT_KEY" /n:"YOUR_PROJECT_REPO_SHORT_NAME" /d:sonar.login=$env:PLUGIN_SONAR_TOKEN /d:sonar.host.url=$env:PLUGIN_SONAR_HOST /d:sonar.analysis.dingtalktoken=$env:PLUGIN_CUSTOM_DING_TOKEN
       - MSBuild.exe  /t:Rebuild
