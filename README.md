@@ -1,5 +1,6 @@
 
-在 mailbyms/msbuild 基础上增加 sonar-scanner(增加 openjdk 11)
+在 [mailbyms/msbuild](https://github.com/mailbyms/docker-msbuild) 基础上增加 sonar-scanner(增加 openjdk 11)
+> Visual Studio (2019) 对应的 MSBuild 工具，.NET Framework, .NET Core, C#, F#, C++, and web 项目
 
 ## 注意
 - Dockerfile 里从网络 ADD 文件太慢，可以下载到本地后，直接 ADD 本地文件
