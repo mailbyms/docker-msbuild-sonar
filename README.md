@@ -10,9 +10,12 @@
 `docker run --rm -it -v c:\src:c:\src mailbyms/msbuild-sonar:2019 cmd`
 
 # drone 流水线配置
-> 下面的步骤，`xxx.csproj`, `YOUR_PROJECT_KEY` 和 `YOUR_PROJECT_REPO_SHORT_NAME` 要替换为实际值；  
-> custom_ding_token 是可选的，用于 SonarQube 回调发送钉钉消息；  
-> 下面的示例把项目原来的 .net Framework 版本定义，由 4.6.2 改为 镜像里的 4.7.2
+commands 说明：
+> 1. 镜像带的 .net Framework 版本是 4.7.2。先把项目原来的 .net Framework 版本定义，由 4.6.2 改为 镜像里的 4.7.2
+> 2. nuget 安装项目的依赖库  
+> 3. SonarScanner 的 begin，`YOUR_PROJECT_KEY` 和 `YOUR_PROJECT_REPO_SHORT_NAME` 要替换为实际值；custom_ding_token 是可选的，用于 SonarQube 回调发送钉钉消息；  
+> 4. MSBuild 编译项目  
+> 5. SonarScanner 的 end
 
 ```
 steps:
